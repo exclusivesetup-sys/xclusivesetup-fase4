@@ -1,0 +1,414 @@
+.cot-form {
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+  margin-bottom: 24px;
+  padding: 22px;
+  border-radius: 20px;
+  border: 1px solid var(--border-accent);
+  background: linear-gradient(
+    180deg,
+    var(--card-bg-1) 0%,
+    var(--card-bg-2) 100%
+  );
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.cot-form::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0.42),
+    rgba(56, 189, 248, 0.12),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.cot-form::after {
+  content: "";
+  position: absolute;
+  top: -42px;
+  right: -32px;
+  width: 150px;
+  height: 150px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.08),
+    rgba(56, 189, 248, 0)
+  );
+  pointer-events: none;
+}
+
+.cot-form .form-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.cot-form .form-field {
+  min-width: 0;
+}
+
+.cot-form .form-field label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.cot-form .form-field input,
+.cot-form .form-field select,
+.cot-form .form-field textarea {
+  width: 100%;
+  padding: 0.74rem 0.86rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-default);
+  background: var(--input-bg);
+  color: var(--input-text);
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.cot-form .form-field input::placeholder,
+.cot-form .form-field textarea::placeholder {
+  color: var(--text-faint);
+}
+
+.cot-form .form-field input:focus,
+.cot-form .form-field select:focus,
+.cot-form .form-field textarea:focus {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 3px var(--border-accent);
+  background: var(--surface-bg);
+}
+
+.cot-form .form-field textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.cot-form .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.72rem 1.05rem;
+  border: 1px solid var(--border-accent-strong);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
+  color: var(--input-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+  box-shadow: 0 10px 22px rgba(30, 64, 175, 0.24);
+}
+
+.cot-form .btn-primary:hover:not(:disabled) {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(30, 64, 175, 0.3);
+}
+
+.cot-form .btn-primary:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.form-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.form-actions-row .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.72rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-default);
+  background: var(--surface-bg);
+  color: var(--text-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.form-actions-row .btn-secondary:hover:not(:disabled) {
+  background: var(--card-bg-1);
+  border-color: rgba(148, 163, 184, 0.35);
+  transform: translateY(-1px);
+}
+
+.cot-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 170px;
+  align-items: center;
+}
+
+.cot-actions .cot-btn-danger {
+  border-color: rgba(239, 68, 68, 0.28);
+  background: rgba(127, 29, 29, 0.14);
+  color: var(--danger-text);
+}
+
+.cot-actions .cot-btn-danger:hover:not(:disabled) {
+  background: rgba(127, 29, 29, 0.26);
+  border-color: rgba(248, 113, 113, 0.42);
+}
+
+.cot-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.36rem 0.65rem;
+  border-radius: 9px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: var(--surface-bg);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.cot-actions button:hover:not(:disabled) {
+  background: var(--card-bg-1);
+  border-color: rgba(148, 163, 184, 0.36);
+  transform: translateY(-1px);
+}
+
+.cot-actions button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cot-table-wrap {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: clamp(280px, calc(100vh - 280px), 720px);
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  background: linear-gradient(
+    180deg,
+    var(--card-bg-1),
+    var(--panel-bg-2)
+  );
+  box-shadow:
+    0 14px 30px var(--card-bg-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.cot-table-wrap:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.cot-table-wrap::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.cot-table-wrap::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 999px;
+}
+
+.cot-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.cot-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.cot-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.88rem;
+  color: var(--text-body);
+}
+
+.cot-table th,
+.cot-table td {
+  padding: 11px 13px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  vertical-align: middle;
+}
+
+.cot-table th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--panel-bg-1);
+  background-color: var(--panel-bg-1);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+}
+
+.cot-table td {
+  color: var(--text-body);
+}
+
+.cot-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.cot-table tbody tr:hover td {
+  background: var(--row-hover-bg);
+}
+
+.cot-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cot-table .is-right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cot-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.26rem 0.68rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.cot-badge--borrador {
+  background: var(--border-default);
+  color: var(--text-body);
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+.cot-badge--enviada {
+  background: rgba(59, 130, 246, 0.16);
+  color: var(--accent-soft);
+  border-color: rgba(59, 130, 246, 0.24);
+}
+
+.cot-badge--aceptada {
+  background: rgba(34, 197, 94, 0.16);
+  color: var(--success-text);
+  border-color: rgba(34, 197, 94, 0.24);
+}
+
+.cot-badge--rechazada {
+  background: rgba(239, 68, 68, 0.16);
+  color: var(--danger-text);
+  border-color: rgba(239, 68, 68, 0.24);
+}
+
+.cot-actions button.cot-btn-crear-proyecto {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border-color: #059669;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.cot-actions button.cot-btn-crear-proyecto:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+
+.cot-actions button.cot-btn-ver-proyecto {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border-color: rgba(99, 102, 241, 0.4);
+  font-weight: 700;
+}
+
+.cot-actions button.cot-btn-ver-proyecto:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.28);
+  border-color: #818cf8;
+}
+
+@media (max-width: 980px) {
+  .cot-form .form-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .cot-form {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .cot-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .cot-actions {
+    flex-direction: column;
+    min-width: 140px;
+  }
+
+  .cot-actions button {
+    width: 100%;
+  }
+
+  .cot-table-wrap {
+    border-radius: 16px;
+  }
+}

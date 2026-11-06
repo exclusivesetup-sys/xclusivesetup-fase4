@@ -1,0 +1,610 @@
+/* ========================================================
+   MÓDULO PROYECTOS - ESTILOS RESPONSIVOS Y TEMA OSCURO
+   ======================================================== */
+
+.pro-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 18px;
+  width: 100%;
+}
+
+.pro-layout > * {
+  min-width: 0;
+}
+
+.pro-form,
+.pro-list {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid var(--border-accent);
+  background: linear-gradient(
+    180deg,
+    var(--surface-bg),
+    var(--card-bg-1)
+  );
+  box-shadow:
+    0 16px 34px var(--card-bg-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  padding: 20px;
+}
+
+.pro-form::before,
+.pro-list::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0.38),
+    rgba(56, 189, 248, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+}
+
+.pro-form::after,
+.pro-list::after {
+  content: "";
+  position: absolute;
+  top: -36px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.08),
+    rgba(56, 189, 248, 0)
+  );
+  pointer-events: none;
+}
+
+.pro-form h3,
+.pro-list h3 {
+  margin: 0 0 14px;
+  color: var(--input-text);
+  font-size: 1.05rem;
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* ========================================================
+   FORMULARIO DE PROYECTO
+   ======================================================== */
+
+.pro-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pro-form-fields {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+
+.pro-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 0;
+}
+
+.pro-form input,
+.pro-form select,
+.pro-form textarea {
+  width: 100%;
+  padding: 0.74rem 0.84rem;
+  border-radius: 13px;
+  border: 1px solid var(--border-default);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.pro-form input::placeholder,
+.pro-form textarea::placeholder {
+  color: var(--text-faint);
+}
+
+.pro-form input:focus,
+.pro-form select:focus,
+.pro-form textarea:focus {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 4px var(--border-accent);
+  background: var(--surface-bg);
+}
+
+.pro-form textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.pro-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.pro-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.pro-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.72rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-accent-strong);
+  background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
+  color: #eff6ff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+  box-shadow: 0 10px 22px rgba(30, 64, 175, 0.24);
+}
+
+.pro-form button:hover:not(:disabled) {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(30, 64, 175, 0.3);
+}
+
+.pro-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-secondary {
+  background: var(--surface-bg);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--card-bg-1);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.pro-error {
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: var(--danger-text);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.pro-empty {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* ========================================================
+   TABLA DE PROYECTOS Y CONTENEDOR CON OVERFLOW CONTROLADO
+   ======================================================== */
+
+.pro-table-container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 10px;
+  max-height: clamp(280px, calc(100vh - 280px), 720px);
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  background: linear-gradient(
+    180deg,
+    var(--card-bg-1),
+    var(--panel-bg-2)
+  );
+  box-shadow:
+    0 14px 30px var(--card-bg-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.pro-table-container:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Scrollbar estilizado en tema oscuro para el contenedor */
+.pro-table-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.pro-table-container::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 999px;
+}
+
+.pro-table-container::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.pro-table-container::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.pro-table {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.88rem;
+  color: var(--text-body);
+}
+
+.pro-table th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding: 11px 13px;
+  text-align: left;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: var(--panel-bg-1);
+  background-color: var(--panel-bg-1);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+  white-space: nowrap;
+}
+
+.pro-table td {
+  padding: 11px 13px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  vertical-align: middle;
+}
+
+.pro-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.pro-table tbody tr:hover td {
+  background: var(--row-hover-bg);
+}
+
+/* Anchos dedicados por columna */
+.pro-col-proyecto {
+  min-width: 180px;
+  max-width: 270px;
+}
+
+.pro-col-cliente {
+  min-width: 130px;
+}
+
+.pro-col-cotizacion {
+  min-width: 130px;
+  white-space: nowrap;
+}
+
+.pro-col-responsable {
+  min-width: 110px;
+}
+
+.pro-col-fechas {
+  min-width: 140px;
+  white-space: nowrap;
+}
+
+.pro-col-estado {
+  min-width: 115px;
+  white-space: nowrap;
+}
+
+.pro-col-avance {
+  min-width: 100px;
+  white-space: nowrap;
+}
+
+.pro-col-acciones {
+  min-width: 175px;
+  text-align: right;
+}
+
+/* ========================================================
+   CONTENIDOS DE CELDAS
+   ======================================================== */
+
+.pro-title {
+  font-weight: 650;
+  color: var(--text-heading);
+  margin-bottom: 3px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.pro-notes {
+  font-size: 0.81rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.pro-date-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.81rem;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.pro-date-lbl {
+  font-weight: 600;
+  color: var(--text-faint);
+  min-width: 38px;
+}
+
+.pro-date-val {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.pro-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.pro-status--planeado {
+  background: var(--border-default);
+  color: var(--text-primary);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.pro-status--en_progreso {
+  background: rgba(34, 197, 94, 0.18);
+  color: var(--success-text);
+  border-color: rgba(34, 197, 94, 0.26);
+}
+
+.pro-status--en_revision {
+  background: rgba(249, 115, 22, 0.18);
+  color: #fed7aa;
+  border-color: rgba(249, 115, 22, 0.26);
+}
+
+.pro-status--completado {
+  background: rgba(59, 130, 246, 0.18);
+  color: var(--accent-soft);
+  border-color: rgba(59, 130, 246, 0.26);
+}
+
+.pro-status--en_pausa {
+  background: rgba(234, 179, 8, 0.18);
+  color: #fde68a;
+  border-color: rgba(234, 179, 8, 0.26);
+}
+
+.pro-status--cancelado {
+  background: rgba(239, 68, 68, 0.18);
+  color: var(--danger-text);
+  border-color: rgba(239, 68, 68, 0.26);
+}
+
+.pro-avance {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-soft);
+  white-space: nowrap;
+}
+
+.pro-avance--empty {
+  color: var(--text-muted-2);
+  font-weight: 600;
+}
+
+/* Columna de Acciones con soporte de distribución multilínea */
+.pro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 170px;
+}
+
+.pro-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.36rem 0.65rem;
+  border-radius: 9px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: var(--surface-bg);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.2;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.pro-action-btn:hover {
+  background: var(--card-bg-1);
+  border-color: rgba(148, 163, 184, 0.36);
+  transform: translateY(-1px);
+}
+
+.pro-action-btn--danger {
+  border-color: rgba(239, 68, 68, 0.28);
+  color: var(--danger-text);
+  background: rgba(127, 29, 29, 0.12);
+}
+
+.pro-action-btn--danger:hover {
+  background: rgba(127, 29, 29, 0.24);
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.pro-action-btn--tasks {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.pro-action-btn--tasks:hover {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: #34d399;
+}
+
+.pro-origin-banner {
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pro-origin-title {
+  color: #818cf8;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+}
+
+.pro-origin-value {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.pro-cot-badge {
+  display: inline-block;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.14);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pro-no-cot {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.pro-row-highlight {
+  background: rgba(59, 130, 246, 0.14) !important;
+  box-shadow: inset 3px 0 0 #3b82f6;
+}
+
+/* ========================================================
+   RESPONSIVIDAD Y BREAKPOINTS ADAPTATIVOS
+   ======================================================== */
+
+/* Adaptación dinámica según ancho disponible del contenedor (sensible al sidebar colapsado/expandido) */
+@container maincontent (min-width: 980px) {
+  .pro-layout {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    align-items: flex-start;
+  }
+}
+
+/* Fallback estándar por ventana */
+@media (min-width: 1260px) {
+  .pro-layout {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    align-items: flex-start;
+  }
+}
+
+/* En modo apilado de escritorio/tablet:
+   El formulario va arriba aprovechando el ancho de manera equilibrada */
+@media (min-width: 768px) and (max-width: 1259px) {
+  .pro-form-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pro-field-notes {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Pantallas móviles (< 640px) */
+@media (max-width: 640px) {
+  .pro-layout {
+    gap: 14px;
+  }
+
+  .pro-form,
+  .pro-list {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .pro-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pro-table th,
+  .pro-table td {
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+}

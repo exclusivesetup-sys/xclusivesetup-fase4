@@ -1,0 +1,309 @@
+.usuarios-page {
+  display: grid;
+  gap: 1.6rem;
+  min-width: 0;
+}
+
+.usuarios-section {
+  display: grid;
+  gap: 1rem;
+  padding: 1.08rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-accent);
+  background: linear-gradient(
+    180deg,
+    var(--panel-bg-1),
+    var(--panel-bg-2)
+  );
+  box-shadow:
+    0 14px 34px var(--card-bg-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.usuarios-section h3 {
+  margin: 0;
+  color: var(--text-heading);
+  font-size: 1.06rem;
+  font-weight: 680;
+  letter-spacing: -0.018em;
+}
+
+.usuarios-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.usuarios-grid {
+  display: grid;
+  gap: 0.82rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.usuarios-form label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.usuarios-form input,
+.usuarios-form select {
+  width: 100%;
+  padding: 0.84rem 0.92rem;
+  border-radius: 13px;
+  border: 1px solid var(--border-default);
+  background: var(--input-bg);
+  color: var(--input-text);
+  font-size: 0.94rem;
+  outline: none;
+}
+
+.usuarios-form input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.usuarios-form input:focus,
+.usuarios-form select:focus {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 4px var(--border-accent);
+  background: var(--input-bg-focus);
+}
+
+.usuarios-error,
+.usuarios-success {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.usuarios-error {
+  color: var(--danger-text);
+}
+
+.usuarios-success {
+  color: var(--success-text);
+}
+
+.usuarios-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.72rem;
+}
+
+.usuarios-actions .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 0.74rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border-accent-strong);
+  background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
+  color: #eff6ff;
+  box-shadow: 0 10px 22px rgba(30, 64, 175, 0.24);
+}
+
+.usuarios-actions .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 0.74rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border-default);
+  background: var(--surface-bg);
+  color: var(--text-primary);
+}
+
+.usuarios-actions button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.usuarios-table-wrap {
+  overflow-x: auto;
+  border-radius: 20px;
+  border: 1px solid var(--border-accent);
+  background: linear-gradient(
+    180deg,
+    var(--panel-bg-1),
+    var(--panel-bg-2)
+  );
+  box-shadow:
+    0 14px 30px var(--card-bg-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.usuarios-table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+}
+
+.usuarios-table thead {
+  background: var(--card-bg-1);
+}
+
+.usuarios-table th {
+  padding: 0.98rem 0.86rem;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+  white-space: nowrap;
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.usuarios-table td {
+  padding: 0.94rem 0.86rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  color: var(--text-body);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.usuarios-table td strong {
+  color: var(--text-heading);
+  font-weight: 700;
+}
+
+.usuarios-tag-tu {
+  margin-left: 0.5rem;
+  display: inline-flex;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.16);
+  color: var(--accent-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.usuarios-table tbody tr:hover {
+  background: var(--row-hover-bg);
+}
+
+.usuarios-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.usuarios-rol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.36rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.usuarios-rol--admin {
+  color: #fde68a;
+  background: rgba(234, 179, 8, 0.14);
+  border-color: rgba(234, 179, 8, 0.28);
+}
+
+.usuarios-rol--gerente {
+  color: var(--accent-soft);
+  background: var(--border-accent);
+  border-color: rgba(59, 130, 246, 0.28);
+}
+
+.usuarios-rol--empleado {
+  color: var(--text-muted);
+  background: var(--border-subtle);
+  border-color: rgba(148, 163, 184, 0.24);
+}
+
+.usuarios-estado {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.36rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.usuarios-estado--activo {
+  color: var(--success-text);
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(34, 197, 94, 0.28);
+}
+
+.usuarios-estado--inactivo {
+  color: var(--danger-text);
+  background: rgba(239, 68, 68, 0.14);
+  border-color: rgba(239, 68, 68, 0.26);
+}
+
+.usuarios-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 0.5rem 0.78rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border-default);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-body);
+}
+
+.chip:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.chip-edit {
+  border-color: rgba(59, 130, 246, 0.28);
+  background: var(--border-accent);
+  color: var(--accent-soft);
+}
+
+.chip-delete {
+  border-color: rgba(239, 68, 68, 0.24);
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-text);
+}
+
+.usuarios-empty {
+  margin: 0;
+  color: var(--text-muted-2);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+  .usuarios-section {
+    padding: 0.95rem;
+    border-radius: 16px;
+  }
+
+  .usuarios-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .usuarios-row-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

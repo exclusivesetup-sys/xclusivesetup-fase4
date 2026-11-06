@@ -1,0 +1,89 @@
+/*
+  Sistema compartido de botones de acción compactos para tarjetas y filas
+  (Oportunidades / Tablero de Pipeline y Facturas). Un solo lugar para
+  mantener escala, padding y jerarquía visual consistentes entre módulos.
+*/
+
+.card-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.15;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+}
+
+.card-action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  filter: none;
+}
+
+.card-action-btn--block {
+  width: 100%;
+}
+
+.card-action-btn--primary {
+  border: 1px solid var(--border-accent-strong);
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  color: #eff6ff;
+  box-shadow: 0 8px 18px rgba(30, 64, 175, 0.22);
+}
+
+.card-action-btn--primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(30, 64, 175, 0.28);
+}
+
+.card-action-btn--secondary {
+  border: 1px solid var(--border-default);
+  background: var(--surface-bg);
+  color: var(--text-body);
+}
+
+.card-action-btn--secondary:hover:not(:disabled) {
+  background: var(--surface-bg-hover);
+  transform: translateY(-1px);
+}
+
+.card-action-btn--ghost {
+  background: var(--surface-bg);
+  border: 1px dashed rgba(148, 163, 184, 0.24);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+.card-action-btn--ghost:hover:not(:disabled) {
+  background: var(--surface-bg-hover);
+  transform: translateY(-1px);
+}
+
+.card-action-btn--danger {
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  background: linear-gradient(180deg, rgba(159, 34, 34, 0.4) 0%, rgba(127, 29, 29, 0.5) 100%);
+  color: #fecaca;
+  box-shadow: 0 8px 16px rgba(127, 29, 29, 0.24);
+}
+
+.card-action-btn--danger:hover:not(:disabled) {
+  background: linear-gradient(180deg, rgba(185, 40, 40, 0.5) 0%, rgba(153, 27, 27, 0.6) 100%);
+  border-color: rgba(252, 165, 165, 0.55);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(127, 29, 29, 0.3);
+}

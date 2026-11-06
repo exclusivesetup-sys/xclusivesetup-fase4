@@ -1,0 +1,19 @@
+{
+  "name": "XclusiveSetup CRM",
+  "short_name": "XclusiveSetup",
+  "description": "Gestión comercial, financiera y operativa para freelancers y agencias.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#0b1120",
+  "theme_color": "#0b1120",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

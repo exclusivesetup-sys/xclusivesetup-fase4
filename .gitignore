@@ -1,0 +1,57 @@
+# =================================================================
+# XclusiveSetup CRM - Reglas de exclusión de Git
+# =================================================================
+
+# --- Entornos y secretos privados ---
+.env
+.env.*
+!.env.example
+!.env.academico.example
+
+# --- Bases de datos SQLite y archivos auxiliares ---
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# --- Almacenamiento dinámico de archivos adjuntos ---
+# (La carpeta uploads/ se genera automáticamente en runtime por server.js)
+uploads/
+
+# --- Dependencias y artefactos de compilación ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# --- Registros y depuración ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- Notas internas, asistentes locales y configuraciones de editor ---
+.claude/
+contexto-claude/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- Documentos internos y reglas de asistentes excluidos ---
+/CLAUDE.md
+/docs/INFORME_TECNICO_FASE4.md
+/docs/session-notes.md
+/docs/roadmap-crm.md

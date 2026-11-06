@@ -1,0 +1,530 @@
+.page {
+  display: grid;
+  gap: 1.6rem;
+  min-width: 0;
+}
+
+.page-header {
+  position: relative;
+  margin-bottom: 0.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 140px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0.92),
+    rgba(56, 189, 248, 0.34),
+    rgba(56, 189, 248, 0)
+  );
+}
+
+.page-header h2 {
+  margin: 0;
+  font-size: 1.86rem;
+  font-weight: 760;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  color: var(--input-text);
+}
+
+.page-header p {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+  max-width: 720px;
+  line-height: 1.62;
+  font-size: 0.96rem;
+}
+
+.ventas-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.9rem;
+}
+
+.summary-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-accent);
+  border-radius: 18px;
+  padding: 1.08rem 1.08rem 1rem;
+  background: linear-gradient(
+    180deg,
+    var(--surface-bg) 0%,
+    var(--panel-bg-2) 100%
+  );
+  box-shadow:
+    0 14px 30px var(--card-bg-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.summary-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0.35),
+    rgba(56, 189, 248, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.summary-card::after {
+  content: "";
+  position: absolute;
+  top: -34px;
+  right: -30px;
+  width: 110px;
+  height: 110px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.08),
+    rgba(56, 189, 248, 0)
+  );
+  pointer-events: none;
+}
+
+.summary-label {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.42rem;
+}
+
+.summary-value {
+  font-size: 1.58rem;
+  font-weight: 760;
+  color: var(--input-text);
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  font-variant-numeric: tabular-nums;
+}
+
+.ventas-section {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.ventas-section h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.08rem;
+  font-weight: 680;
+  letter-spacing: -0.02em;
+}
+
+.ventas-card {
+  border: 1px solid var(--border-accent);
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    var(--panel-bg-1),
+    var(--panel-bg-2)
+  );
+  padding: 1.08rem;
+  box-shadow:
+    0 14px 34px var(--card-bg-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.ventas-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.ventas-grid {
+  display: grid;
+  gap: 0.78rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.ventas-form label,
+.ventas-filters label {
+  display: grid;
+  gap: 0.38rem;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.ventas-form input,
+.ventas-form select,
+.ventas-form textarea,
+.ventas-filters input,
+.ventas-filters select {
+  width: 100%;
+  border-radius: 13px;
+  border: 1px solid var(--border-default);
+  background: var(--input-bg);
+  color: var(--input-text);
+  padding: 0.78rem 0.88rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.18s ease;
+}
+
+.ventas-form input::placeholder,
+.ventas-form textarea::placeholder,
+.ventas-filters input::placeholder {
+  color: var(--text-faint);
+}
+
+.ventas-form input:focus,
+.ventas-form select:focus,
+.ventas-form textarea:focus,
+.ventas-filters input:focus,
+.ventas-filters select:focus {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 4px var(--border-accent);
+  background: var(--input-bg-focus);
+}
+
+.ventas-form textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.form-message {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.form-message.error {
+  color: var(--danger-text);
+}
+
+.form-message.success {
+  color: var(--success-text);
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 0.72rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.btn-primary {
+  border: 1px solid var(--border-accent-strong);
+  background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
+  color: #eff6ff;
+  box-shadow: 0 10px 22px rgba(30, 64, 175, 0.24);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(30, 64, 175, 0.3);
+}
+
+.btn-secondary {
+  border: 1px solid var(--border-default);
+  background: var(--surface-bg);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  border-color: var(--border-default);
+  background: var(--surface-bg-hover);
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  background: rgba(127, 29, 29, 0.14);
+  color: var(--danger-text);
+}
+
+.btn-danger:hover {
+  border-color: rgba(239, 68, 68, 0.36);
+  background: rgba(127, 29, 29, 0.24);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-danger:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  filter: none;
+}
+
+.ventas-filters {
+  display: grid;
+  gap: 0.78rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-bottom: 1rem;
+}
+
+.ventas-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-accent);
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    var(--panel-bg-1),
+    var(--panel-bg-2)
+  );
+  box-shadow:
+    0 14px 30px var(--card-bg-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.ventas-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1100px;
+}
+
+.ventas-table thead {
+  background: var(--card-bg-1);
+}
+
+.ventas-table th {
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.95rem 0.86rem;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ventas-table td {
+  padding: 0.9rem 0.86rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  color: var(--text-primary);
+  vertical-align: top;
+}
+
+.ventas-table tbody tr:hover {
+  background: var(--row-hover-bg);
+}
+
+.venta-main {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.venta-main strong {
+  color: var(--input-text);
+  font-size: 0.96rem;
+}
+
+.venta-main span {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.venta-price {
+  text-align: right;
+  font-weight: 760;
+  color: var(--input-text);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.3rem 0.72rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  text-transform: capitalize;
+}
+
+.estado-badge.activo {
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--success-text);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+.estado-badge.borrador {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fcd34d;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.estado-badge.inactivo {
+  background: var(--border-subtle);
+  color: var(--text-muted);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.table-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.empty-state,
+.loading-state {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .page-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .page-header p {
+    font-size: 0.91rem;
+  }
+
+  .ventas-card {
+    padding: 0.95rem;
+    border-radius: 16px;
+  }
+
+  .summary-card {
+    border-radius: 16px;
+  }
+
+  .form-actions,
+  .table-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    width: 100%;
+  }
+
+  .ventas-table-wrap {
+    overflow-x: visible;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .ventas-table,
+  .ventas-table thead,
+  .ventas-table tbody,
+  .ventas-table tr,
+  .ventas-table td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ventas-table thead {
+    display: none;
+  }
+
+  .ventas-table tr {
+    margin-bottom: 0.75rem;
+    padding: 0.85rem 0.95rem;
+    border: 1px solid var(--border-accent);
+    border-radius: 16px;
+    background: linear-gradient(
+      180deg,
+      var(--panel-bg-1),
+      var(--panel-bg-2)
+    );
+    box-shadow: 0 10px 22px var(--card-bg-2);
+  }
+
+  .ventas-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .ventas-table td {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+    min-width: 0;
+  }
+
+  .ventas-table td::before {
+    content: "";
+    display: block;
+    margin-bottom: 0.22rem;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .ventas-table td:nth-child(1)::before {
+    content: "Servicio";
+  }
+
+  .ventas-table td:nth-child(2)::before {
+    content: "Categoría";
+  }
+
+  .ventas-table td:nth-child(3)::before {
+    content: "Estado";
+  }
+
+  .ventas-table td:nth-child(4)::before {
+    content: "Tiempo estimado";
+  }
+
+  .ventas-table td:nth-child(5)::before {
+    content: "Precio";
+  }
+
+  .ventas-table td:nth-child(6)::before {
+    content: "Detalle";
+  }
+
+  .ventas-table td:last-child {
+    border-bottom: none;
+    padding-top: 0.7rem;
+  }
+
+  .venta-price {
+    text-align: left;
+  }
+}

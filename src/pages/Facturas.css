@@ -1,0 +1,598 @@
+.fac-new,
+.fac-payments-panel,
+.fac-main {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--surface-bg) 0%,
+    var(--card-bg-2) 100%
+  );
+  border: 1px solid var(--border-accent);
+  border-radius: 20px;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.fac-new::before,
+.fac-payments-panel::before,
+.fac-main::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0.42),
+    rgba(56, 189, 248, 0.12),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.fac-new::after,
+.fac-payments-panel::after,
+.fac-main::after {
+  content: "";
+  position: absolute;
+  top: -42px;
+  right: -32px;
+  width: 145px;
+  height: 145px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.08),
+    rgba(56, 189, 248, 0)
+  );
+  pointer-events: none;
+}
+
+.fac-new {
+  margin-top: 20px;
+  margin-bottom: 18px;
+  padding: 22px;
+}
+
+.fac-new h3,
+.fac-payments-panel h3 {
+  margin: 0 0 14px;
+  font-size: 1.08rem;
+  font-weight: 720;
+  color: var(--input-text);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.fac-new-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.fac-new-form label,
+.fac-payment-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.fac-new-form input,
+.fac-new-form select,
+.fac-new-form textarea,
+.fac-payment-form input,
+.fac-payment-form textarea {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: var(--card-bg-2);
+  color: var(--text-primary);
+  padding: 11px 12px;
+  font-size: 0.92rem;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.fac-new-form input::placeholder,
+.fac-new-form textarea::placeholder,
+.fac-payment-form input::placeholder,
+.fac-payment-form textarea::placeholder {
+  color: var(--text-faint);
+}
+
+.fac-new-form input:focus,
+.fac-new-form select:focus,
+.fac-new-form textarea:focus,
+.fac-payment-form input:focus,
+.fac-payment-form textarea:focus {
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow: 0 0 0 4px var(--border-accent);
+  background: var(--input-bg-focus);
+}
+
+.fac-new-form textarea,
+.fac-payment-form textarea {
+  resize: vertical;
+  min-height: 88px;
+}
+
+.fac-new-form button,
+.fac-payment-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  color: #eff6ff;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    opacity 0.18s ease,
+    filter 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+  box-shadow: 0 10px 22px rgba(30, 64, 175, 0.24);
+}
+
+.fac-new-form button:hover,
+.fac-payment-form button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+  box-shadow: 0 14px 26px rgba(30, 64, 175, 0.3);
+}
+
+.fac-new-form button:disabled,
+.fac-payment-form button:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  filter: none;
+}
+
+.fac-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2.05fr) minmax(360px, 0.95fr);
+  gap: 18px;
+  margin-top: 18px;
+  align-items: start;
+}
+
+.fac-main {
+  padding: 8px 0 0;
+}
+
+.fac-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+
+.fac-table thead th {
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-bg);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+
+.fac-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--surface-bg-hover);
+  vertical-align: middle;
+}
+
+.fac-table tbody tr {
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.fac-table tbody tr:hover {
+  background: var(--surface-bg);
+}
+
+.fac-table tr.fac-row-vencida {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.fac-table tr.fac-row-vencida td {
+  border-bottom-color: rgba(127, 29, 29, 0.62);
+}
+
+.fac-table tr.fac-row-proxima {
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.fac-table tr.fac-row-proxima td {
+  border-bottom-color: rgba(120, 53, 15, 0.6);
+}
+
+.fac-table tr.fac-row-selected {
+  background: linear-gradient(
+    180deg,
+    var(--surface-bg-hover),
+    var(--card-bg-1)
+  );
+  box-shadow: inset 3px 0 0 rgba(96, 165, 250, 0.9);
+}
+
+.fac-table tr.fac-row-selected td {
+  border-bottom-color: rgba(59, 130, 246, 0.25);
+}
+
+.is-right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.fac-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 112px;
+}
+
+.fac-actions .card-action-btn {
+  min-height: 29px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.76rem;
+  border-radius: 8px;
+}
+
+.fac-payments-panel {
+  padding: 16px;
+  min-height: 320px;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.fac-panel-top {
+  display: grid;
+  gap: 6px;
+  padding-bottom: 2px;
+}
+
+.fac-panel-top p {
+  margin: 0;
+  color: var(--text-muted-2);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.fac-empty-panel {
+  padding: 18px 16px;
+  border-radius: 16px;
+  border: 1px dashed rgba(148, 163, 184, 0.18);
+  background: var(--surface-bg);
+}
+
+.fac-selected-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--surface-bg);
+  border: 1px solid var(--border-subtle);
+}
+
+.fac-selected-eyebrow {
+  margin: 0 0 4px;
+  color: #60a5fa;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.fac-selected-head h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--input-text);
+  line-height: 1.35;
+}
+
+.fac-selected-caption {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.fac-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.fac-status-badge.is-pending {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.28);
+  color: #fbbf24;
+}
+
+.fac-status-badge.is-partial {
+  background: var(--border-accent);
+  border-color: rgba(59, 130, 246, 0.26);
+  color: var(--accent-soft);
+}
+
+.fac-status-badge.is-paid {
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(34, 197, 94, 0.26);
+  color: var(--success-text);
+}
+
+.fac-status-badge.is-overdue {
+  background: rgba(239, 68, 68, 0.14);
+  border-color: rgba(239, 68, 68, 0.24);
+  color: var(--danger-text);
+}
+
+.fac-status-badge.is-cancelled {
+  background: var(--border-subtle);
+  border-color: rgba(148, 163, 184, 0.2);
+  color: var(--text-muted);
+}
+
+.fac-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.fac-kpi-card {
+  padding: 14px 14px;
+  border-radius: 16px;
+  background: var(--surface-bg);
+  border: 1px solid var(--border-subtle);
+  display: grid;
+  gap: 6px;
+}
+
+.fac-kpi-card span {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.fac-kpi-card strong {
+  color: var(--input-text);
+  font-size: 1.15rem;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.fac-kpi-card--wide {
+  grid-column: 1 / -1;
+  background: linear-gradient(
+    180deg,
+    var(--surface-bg-hover),
+    var(--surface-bg)
+  );
+  border-color: rgba(96, 165, 250, 0.16);
+}
+
+.fac-inline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  margin-top: -2px;
+}
+
+.fac-last-payment {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-body);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.fac-last-payment strong {
+  color: var(--input-text);
+}
+
+.fac-last-payment--empty {
+  color: var(--text-muted);
+}
+
+.fac-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.fac-quick-actions .card-action-btn {
+  padding: 0.5rem 0.4rem;
+  font-size: 0.76rem;
+  white-space: normal;
+  text-align: center;
+}
+
+.fac-payment-form {
+  margin-top: 2px;
+  display: grid;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.fac-form-head {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.fac-payment-form h4,
+.fac-payments-list h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--input-text);
+}
+
+.fac-form-head p {
+  margin: 0;
+  color: var(--text-muted-2);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.fac-payments-list {
+  margin-top: 4px;
+  overflow-x: auto;
+}
+
+.fac-payments-list table {
+  width: 100%;
+  min-width: 400px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  background: var(--card-bg-2);
+}
+
+.fac-payments-list th,
+.fac-payments-list td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--surface-bg-hover);
+  font-size: 0.8rem;
+}
+
+.fac-payments-list .card-action-btn {
+  min-height: 26px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.72rem;
+}
+
+.fac-payments-list th {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--surface-bg);
+}
+
+.fac-payments-list tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.form-message.error {
+  background: rgba(127, 29, 29, 0.18);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  color: var(--danger-text);
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+
+.form-message.success {
+  background: rgba(20, 83, 45, 0.18);
+  border: 1px solid rgba(74, 222, 128, 0.18);
+  color: var(--success-text);
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+
+.pipeline-status {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1180px) {
+  .fac-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .fac-kpi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fac-quick-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .fac-new,
+  .fac-payments-panel,
+  .fac-main {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .fac-new-form {
+    grid-template-columns: 1fr;
+  }
+
+  .fac-main {
+    overflow-x: auto;
+  }
+
+  .fac-table {
+    min-width: 980px;
+  }
+
+  .fac-selected-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fac-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fac-kpi-card--wide {
+    grid-column: auto;
+  }
+
+  .fac-actions {
+    min-width: 140px;
+  }
+}
