@@ -123,7 +123,6 @@ function Topbar({
               </svg>
             )}
           </button>
-          {/* Notificaciones externas retiradas en alcance académico */ }
 
           <div className="topbar-user">
             <button

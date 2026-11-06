@@ -499,7 +499,7 @@ async function sembrarDatos() {
     );
 
     if (!row) {
-      const res = await dbRun(
+      await dbRun(
         `INSERT INTO cotizaciones (cliente_id, titulo, descripcion, subtotal, impuestos, total, estado, fecha, vigencia)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [

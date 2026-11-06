@@ -451,7 +451,7 @@ app.post("/api/auth/login/verificar-2fa", async (req, res) => {
   let payload;
   try {
     payload = jwt.verify(preToken, JWT_SECRET);
-  } catch (err) {
+  } catch (_err) {
     return res.status(401).json({ error: "Sesión de verificación expirada, inicia sesión de nuevo" });
   }
 
@@ -538,7 +538,7 @@ app.post("/api/auth/cambiar-password-obligatorio", async (req, res) => {
   let payload;
   try {
     payload = jwt.verify(preToken, JWT_SECRET);
-  } catch (err) {
+  } catch (_err) {
     return res
       .status(401)
       .json({ error: "Sesión de verificación expirada, inicia sesión de nuevo" });
