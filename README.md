@@ -1,130 +1,150 @@
-# XclusiveSetup CRM - Prototipo Académico
+# XclusiveSetup
 
-Prototipo web funcional de CRM (Customer Relationship Management) orientado a la gestión integrada de clientes, cotizaciones, proyectos y tareas operativas.
+Prototipo web funcional de CRM orientado a la gestión integrada de clientes, cotizaciones, proyectos y tareas operativas.
 
-Este repositorio corresponde a la entrega de la **Fase 4** del curso **Proyecto de Grado** de la **Universidad Nacional Abierta y a Distancia (UNAD)**.
+## Descripción general
 
----
+XclusiveSetup es un prototipo de software diseñado para centralizar la gestión comercial y operativa de servicios técnicos. El sistema permite registrar y consultar clientes, elaborar cotizaciones vinculadas a dichos clientes, realizar la conversión controlada de cotizaciones aprobadas hacia proyectos operativos y gestionar las tareas requeridas para su ejecución.
 
-## 1. Créditos y Autoría
+El prototipo implementa un flujo básico de trabajo estructurado en las siguientes fases:
+Cliente → Cotización → Cotización aceptada → Proyecto → Tareas.
 
-- **Desarrollo inicial y base tecnológica del sistema:** John Alexander Bernal Alvarado.
-- **Consolidación, aseguramiento metodológico y entrega Fase 4:** Trabajo colaborativo entre John Alexander Bernal Alvarado (liderazgo técnico, implementación, pruebas y demostración) y Jeisson Iván Marcillo Combita (liderazgo documental y coherencia con la metodología de desarrollo tecnológico).
+## Alcance funcional
 
----
+El alcance funcional principal evaluado en este prototipo comprende exclusivamente los siguientes módulos:
 
-## 2. Alcance Académico Evaluado
+1. **Gestión de clientes:** Registro, listado y consulta de información de contacto comercial.
+2. **Gestión de cotizaciones:** Creación de propuestas económicas vinculadas a un cliente, con control de estados (borrador, enviada, aceptada, rechazada).
+3. **Conversión controlada de cotizaciones a proyectos:** Proceso transaccional e idempotente que valida que una cotización se encuentre en estado `aceptada` antes de generar el proyecto asociado.
+4. **Gestión de proyectos:** Seguimiento del estado del proyecto generado a partir de la propuesta aprobada.
+5. **Gestión de tareas:** Creación, asignación de estados y seguimiento de actividades operativas asociadas a un proyecto.
 
-El prototipo académico cubre de manera estricta el siguiente alcance base funcional:
-1. **Autenticación y Seguridad:** Inicio y cierre de sesión con tokens JWT, protección de endpoints mediante middlewares y contraseñas hasheadas con `bcryptjs`.
-2. **Gestión de Clientes:** Registro, consulta, edición y eliminación de clientes, con validación de obligatoriedad en `nombre` y `email`.
-3. **Gestión de Cotizaciones:** Emisión de propuestas económicas vinculadas a clientes, cálculo de montos y ciclo de estados (`borrador`, `enviada`, `aceptada`, `rechazada`).
-4. **Conversión Controlada a Proyecto:** Transformación transaccional e idempotente de cotizaciones con estado estricto `'aceptada'` hacia proyectos en estado `'planeado'`, conservando la trazabilidad de la cotización y previniendo duplicidades.
-5. **Gestión de Tareas Operativas:** Registro, priorización, asignación de responsables y seguimiento de tareas asociadas a proyectos, con validación cronológica (`fecha_limite >= fecha_inicio`).
+### Componentes de soporte técnico
+El sistema integra como componentes técnicos de soporte:
+- Autenticación mediante tokens JWT (JSON Web Tokens).
+- Almacenamiento seguro de contraseñas mediante hash con `bcryptjs`.
+- Gestión de almacenamiento de archivos adjuntos mediante `Multer`.
 
-> **Nota sobre funcionalidades complementarias:**
-> Los módulos de Facturación, Finanzas, Oportunidades, Leads y Calendario corresponden a fases de expansión comercial fuera del alcance académico base. De igual forma, las rutas de Inteligencia Artificial (`/api/ia/*`) se encuentran deshabilitadas de manera intencional en este perfil (respondiendo HTTP `503 Service Unavailable`) para no requerir credenciales ni cuotas de servicios de terceros.
+> [!NOTE]
+> Otros módulos o archivos presentes en el código fuente (como analíticas, facturación, finanzas, leads, calendario, pipeline, ventas, administración de usuarios, visor de logs y asistente de IA) corresponden a exploraciones técnicas secundarias y no forman parte del alcance funcional evaluado en esta versión académica.
 
----
+## Tecnologías utilizadas
 
-## 3. Requisitos del Sistema y Compatibilidad de Node.js
+- **Frontend:** React 19, JavaScript (ES Modules).
+- **Herramienta de desarrollo y compilación:** Vite.
+- **Backend:** Node.js con Express.
+- **Persistencia de datos:** SQLite mediante el controlador `sqlite3`.
+- **Seguridad y sesiones:** `jsonwebtoken` (JWT) y `bcryptjs`.
+- **Gestión de cargas:** `multer`.
+- **Estilos:** CSS personalizado modular.
 
-Para garantizar la correcta ejecución de todas las herramientas y dependencias, el entorno debe cumplir con la **intersección exacta** de versiones de Node.js exigida por el manifiesto de paquetes:
+## Requisitos
 
-- **`vite` (v8.1.2):** Exige `node: '^20.19.0 || >=22.12.0'`.
-- **`eslint` (v10.6.0):** Exige `node: '^20.19.0 || ^22.13.0 || >=24'`.
-- **Node.js CLI `--env-file`:** Requiere Node.js $\ge 20.6.0$.
+- **Node.js:** Versión 20 LTS (`>= 20.19.0`), Versión 22 LTS (`>= 22.13.0`) o superior (compatible con Node.js 24.x). Requerido por Vite, ESLint y la directiva nativa `--env-file`.
+- **Gestor de paquetes:** `npm` (incluido con Node.js).
+- **Navegador web:** Compatible con ECMAScript 2022 y estándares web modernos.
 
-### Rangos de Node.js Soportados:
-- **Rama v20 LTS:** Desde `v20.19.0` hasta `<21.0.0`.
-- **Rama v22 LTS:** Desde `v22.13.0` hasta `<23.0.0`.
-- **Rama v24:** Desde `v24.0.0` en adelante.
+## Instalación y ejecución local
 
-*(Versiones intermedias como Node 18.x, Node 20.0 - 20.18, Node 21.x o Node 22.0 - 22.12 no satisfacen las restricciones de empaquetado y linters de este proyecto).*
+Para desplegar y ejecutar el prototipo en un entorno local, siga estos pasos:
 
-- **Versión del entorno local reportada durante las pruebas:** Node.js `v24.16.0` y npm `11.13.0` sobre Windows.
-
----
-
-## 4. Guía de Puesta en Marcha (Paso a Paso)
-
-Todos los comandos deben ejecutarse desde la raíz de este directorio (`xclusivesetup-portal`).
-
-### Paso 1: Configurar las Variables de Entorno Académicas
-Copia la plantilla de ejemplo para generar tu archivo local `.env.academico`:
-
-```bash
-# En Windows (PowerShell):
-Copy-Item .env.academico.example .env.academico
-
-# En Linux o macOS:
-cp .env.academico.example .env.academico
-```
-
-Abre `.env.academico` y completa obligatoriamente las siguientes dos variables:
-1. `JWT_SECRET`: Genera un secreto aleatorio ejecutando en tu terminal:
+1. Clonar el repositorio:
    ```bash
-   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+   git clone https://github.com/exclusivesetup-sys/xclusivesetup-fase4.git
    ```
-   Pega la cadena resultante como valor de `JWT_SECRET`.
-2. `DEMO_ADMIN_PASSWORD`: Asigna la contraseña que utilizarás para iniciar sesión con el usuario demo (`demo@example.com`).
 
-*(El archivo `.env.academico` está ignorado por Git para proteger la confidencialidad de tus claves locales).*
+2. Ingresar al directorio del proyecto:
+   ```bash
+   cd xclusivesetup-fase4
+   ```
 
-### Paso 2: Instalar Dependencias Reproducibles
-Utiliza `npm ci` para instalar exactamente las versiones fijadas en `package-lock.json`:
+3. Copiar la plantilla de configuración académica:
+   ```bash
+   # En Linux / macOS:
+   cp .env.academico.example .env.academico
 
-```bash
-npm ci
-```
-*(Alternativamente, puede usarse `npm install`).*
+   # En Windows (PowerShell):
+   Copy-Item .env.academico.example .env.academico
+   ```
 
-### Paso 3: Inicializar la Base de Datos Académica y Sembrar Datos
-Inicializa el esquema de SQLite y carga datos ficticios de prueba (`@ejemplo.com`):
+4. Configurar las variables locales en `.env.academico`:
+   Abra el archivo `.env.academico` y asigne valores locales propios a las variables obligatorias:
+   - `JWT_SECRET`: Clave de firma para los tokens de sesión.
+   - `DEMO_ADMIN_PASSWORD`: Contraseña asignada para el usuario de demostración académica.
 
-```bash
-npm run seed:academico
-```
+5. Instalar las dependencias del proyecto:
+   ```bash
+   npm ci
+   # o alternativamente:
+   npm install
+   ```
 
-- Este script es **totalmente idempotente**: crea automáticamente el archivo `database.academico.db` con sus 12 tablas, el índice condicional de proyectos y siembra 4 clientes, 4 cotizaciones, 3 proyectos, 6 tareas y el usuario administrador demo.
-- *Nota sobre migraciones:* El script `migracion_academica_paso3.mjs` solo es necesario si se actualiza una base de datos antigua previa al paso 3. Al ejecutar `npm run seed:academico` desde cero, el esquema ya incluye todas las columnas e índices.
+6. Inicializar la base de datos local y cargar datos iniciales de prueba:
+   ```bash
+   npm run seed:academico
+   ```
 
-### Paso 4: Iniciar Servidores en Dos Terminales
+7. Iniciar el servidor backend en una primera terminal:
+   ```bash
+   npm run server:academico
+   ```
+   El backend iniciará la escucha en el puerto `4050`.
 
-**Terminal 1 (Backend Express):**
-```bash
-npm run server:academico
-```
-- Se iniciará en: `http://localhost:4050`
-- Conectará exclusivamente a `database.academico.db` y resolverá archivos adjuntos en `uploads/academico/`.
+8. Iniciar el servidor frontend en una segunda terminal:
+   ```bash
+   npm run dev:academico
+   ```
+   El frontend estará accesible en el puerto `5180`.
 
-**Terminal 2 (Frontend Vite):**
-```bash
-npm run dev:academico
-```
-- Se iniciará en: `http://localhost:5180`
-- Redirigirá internamente las peticiones `/api` hacia `http://localhost:4050` mediante su proxy reverso.
+9. Abrir el aplicativo en el navegador ingresando a:
+   ```text
+   http://localhost:5180
+   ```
 
-### Paso 5: Acceder al Prototipo en el Navegador
-Abre en tu navegador web:
-**[http://localhost:5180](http://localhost:5180)**
+## Seguridad y configuración local
 
-Ingresa con las credenciales que configuraste en tu `.env.academico`:
-- **Usuario:** `demo@example.com` (o el valor de `DEMO_ADMIN_EMAIL`)
-- **Contraseña:** La clave configurada en `DEMO_ADMIN_PASSWORD`
+- El archivo `.env.academico` contiene secretos y configuraciones locales sensibles, por lo cual se encuentra excluido del control de versiones mediante `.gitignore` y **nunca debe publicarse en el repositorio**.
+- El archivo `.env.academico.example` actúa únicamente como plantilla estructural y no contiene contraseñas, secretos ni claves reales.
+- Cada evaluador o desarrollador debe generar su propio `JWT_SECRET` y definir una contraseña local para el usuario de demostración en su copia privada `.env.academico`.
 
----
+## Pruebas disponibles
 
-## 5. Pruebas Automatizadas Disponibles
+El proyecto incluye scripts de prueba e inspección automatizada en la raíz del repositorio:
 
-| Script de Prueba | Comando | Tipo | Advertencia sobre Datos |
-| :--- | :--- | :--- | :--- |
-| **Verificación de Humo (Smoke Test)** | `node verify_academic.mjs` | Solo Lectura | **Seguro:** Comprueba login demo, sesión `/api/auth/me`, conteo de tablas y bloqueo HTTP 503 de IA sin modificar datos. |
-| **Suite de Integración Paso 3** | `node test_flujo_academico_paso3.mjs` | Integración API | **Modifica datos:** Ejecuta 9 escenarios de prueba (rechazos 401/404/400, conversión de cotización a proyecto, idempotencia y validación de fechas de tareas). Inserta nuevos registros en `database.academico.db`. |
+1. **Verificación de servicios de solo lectura (`verify_academic.mjs`):**
+   ```bash
+   node verify_academic.mjs
+   ```
+   Comprueba que los servicios externos de IA respondan bloqueados con código HTTP 503, valida la autenticación del usuario demo, comprueba la sesión en `/api/auth/me` y consulta en modo de solo lectura las listas de clientes, cotizaciones, proyectos y tareas. Este script no realiza modificaciones sobre la base de datos local.
 
----
+2. **Prueba automatizada del flujo de conversión (`test_flujo_academico_paso3.mjs`):**
+   ```bash
+   node test_flujo_academico_paso3.mjs
+   ```
+   Valida el rechazo ante solicitudes no autenticadas (HTTP 401), el manejo de cotizaciones inexistentes (HTTP 404), el bloqueo de conversión cuando una cotización no está en estado aceptada (HTTP 400), la conversión efectiva de una cotización aceptada a proyecto (HTTP 201) y la regla de idempotencia para prevenir conversiones duplicadas.
+   *(Advertencia: este script ejecuta operaciones transaccionales de escritura sobre la base de datos local).*
 
-## 6. Estado de Validación Metodológica
+## Limitaciones
 
-- **Comprobación de la Implementación:** La arquitectura cliente-servidor, el esquema relacional SQLite y la respuesta HTTP en puertos locales fueron comprobados mediante inspección de código y arranque controlado local.
-- **Nivel de Madurez Tecnológica (TRL):** El proyecto dispone de una implementación del flujo principal y de evidencias de pruebas documentadas previamente. La justificación del nivel de madurez tecnológica para la entrega de Fase 4 se presentará con base en las evidencias de integración y validación disponibles. No se declara en este README un nivel TRL acreditado.
+- **Carácter del proyecto:** Es un prototipo académico experimental, no un producto comercial terminado.
+- **Dependencia de ejecución local:** El funcionamiento integral requiere la ejecución local del backend en Express y del motor de base de datos SQLite.
+- **Incompatibilidad con GitHub Pages para ejecución completa:** GitHub Pages es una plataforma exclusiva para alojamiento de archivos estáticos (HTML, JS, CSS). No tiene capacidad de ejecutar entornos Node.js ni bases de datos SQLite. Si se aloja únicamente el frontend compilado en GitHub Pages, la interfaz gráfica cargará visualmente, pero los inicios de sesión y las operaciones contra la API fallarán sin un backend accesible.
+- **Servicios externos:** El prototipo no incluye servicios de inteligencia artificial activos ni pasarelas comerciales externas habilitadas.
+- **Delimitación:** La operatividad evaluada se concentra puntualmente en los módulos de clientes, cotizaciones, proyectos y tareas.
+
+## Uso académico
+
+Este prototipo puede utilizarse como base para trabajos académicos relacionados con desarrollo de software, ingeniería de software, gestión tecnológica y emprendimiento de base tecnológica. Cada trabajo académico debe presentar el proyecto desde su enfoque específico: desarrollo y validación técnica, proceso de ingeniería, o análisis de oportunidad y modelo de negocio.
+
+## Estructura del proyecto
+
+- `src/`: Código fuente del frontend (componentes React, páginas, utilidades de consumo de API y hojas de estilo).
+- `server.js`: Servidor backend en Express con la definición de rutas RESTful y control de persistencia.
+- `database.academico.db`: Archivo SQLite generado localmente tras ejecutar el seed académico (excluido de Git).
+- `uploads/`: Directorio para el almacenamiento local de archivos adjuntos (excluido de Git).
+- `package.json`: Definición de dependencias, configuración del proyecto y scripts de ejecución.
+- `.env.academico.example`: Plantilla de configuración de entorno para despliegue local.
+
+## Licencia o aviso académico
+
+Este repositorio corresponde a un prototipo académico. Su uso, reproducción o distribución fuera del contexto académico requiere autorización de los autores.
