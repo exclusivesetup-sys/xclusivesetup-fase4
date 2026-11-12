@@ -26,7 +26,7 @@ El sistema integra como componentes técnicos de soporte:
 - Gestión de almacenamiento de archivos adjuntos mediante `Multer`.
 
 > [!NOTE]
-> Otros módulos o archivos presentes en el código fuente (como analíticas, facturación, finanzas, leads, calendario, pipeline, ventas, administración de usuarios, visor de logs y asistente de IA) corresponden a exploraciones técnicas secundarias y no forman parte del alcance funcional evaluado en esta versión académica.
+> Nota: El alcance funcional evaluado en esta versión académica corresponde a los módulos de clientes, cotizaciones, proyectos y tareas, junto con autenticación, almacenamiento local en SQLite y carga de archivos.
 
 ## Tecnologías utilizadas
 
