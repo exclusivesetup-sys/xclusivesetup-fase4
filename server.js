@@ -1917,7 +1917,7 @@ app.delete("/api/tareas/:id", requiereRol("admin", "gerente"), (req, res) => {
   );
 });
 
-app.post("/api/proyectos", (req, res) => {
+app.post("/api/proyectos", async (req, res) => {
   const {
     cliente_id,
     cliente,
@@ -1936,6 +1936,86 @@ app.post("/api/proyectos", (req, res) => {
       .json({ error: "El título del proyecto es obligatorio" });
   }
 
+  let finalCotizacionId = null;
+  let finalClienteId =
+    cliente_id !== undefined && cliente_id !== null && String(cliente_id).trim() !== ""
+      ? Number(cliente_id)
+      : null;
+  let finalClienteNombre = cliente || null;
+
+  if (
+    cotizacion_id !== undefined &&
+    cotizacion_id !== null &&
+    String(cotizacion_id).trim() !== ""
+  ) {
+    const parsedCotId = Number(cotizacion_id);
+    if (!parsedCotId || Number.isNaN(parsedCotId)) {
+      return res
+        .status(400)
+        .json({ error: "Identificador de cotización inválido" });
+    }
+
+    try {
+      const cot = await dbGet("SELECT * FROM cotizaciones WHERE id = ?", [
+        parsedCotId,
+      ]);
+
+      if (!cot) {
+        return res.status(404).json({ error: "Cotización no encontrada" });
+      }
+
+      if (cot.estado !== "aceptada") {
+        return res.status(400).json({
+          error:
+            "Solo se pueden vincular a un proyecto cotizaciones con estado 'aceptada'",
+          estado_actual: cot.estado,
+        });
+      }
+
+      const proyectoExistente = await dbGet(
+        "SELECT id FROM proyectos WHERE cotizacion_id = ?",
+        [parsedCotId]
+      );
+
+      if (proyectoExistente) {
+        return res.status(400).json({
+          error: "Ya existe un proyecto vinculado a esta cotización",
+          proyecto_id: proyectoExistente.id,
+        });
+      }
+
+      if (finalClienteId != null && cot.cliente_id != null) {
+        if (Number(finalClienteId) !== Number(cot.cliente_id)) {
+          return res.status(400).json({
+            error:
+              "El cliente indicado no coincide con el cliente de la cotización",
+          });
+        }
+      }
+
+      finalCotizacionId = parsedCotId;
+      if (!finalClienteId && cot.cliente_id) {
+        finalClienteId = cot.cliente_id;
+      }
+    } catch (errCheck) {
+      console.error("Error al validar cotización para proyecto:", errCheck);
+      return res
+        .status(500)
+        .json({ error: "Error interno al validar cotización para el proyecto" });
+    }
+  }
+
+  if (!finalClienteNombre && finalClienteId) {
+    try {
+      const cli = await dbGet("SELECT nombre FROM clientes WHERE id = ?", [
+        finalClienteId,
+      ]);
+      if (cli) {
+        finalClienteNombre = cli.nombre;
+      }
+    } catch (_) {}
+  }
+
   const stmt = db.prepare(`
     INSERT INTO proyectos (
       cliente_id,
@@ -1952,15 +2032,15 @@ app.post("/api/proyectos", (req, res) => {
   `);
 
   stmt.run(
-    cliente_id || null,
-    cliente || null,
+    finalClienteId || null,
+    finalClienteNombre || null,
     titulo,
     responsable || null,
     fecha_inicio || null,
     fecha_fin || null,
     estado || "planeado",
     notas || null,
-    cotizacion_id || null,
+    finalCotizacionId || null,
     function (err) {
       if (err) {
         console.error("Error al crear proyecto:", err);
@@ -1997,15 +2077,15 @@ app.post("/api/proyectos", (req, res) => {
 
       res.status(201).json({
         id: proyectoId,
-        cliente_id,
-        cliente,
+        cliente_id: finalClienteId || null,
+        cliente: finalClienteNombre || null,
         titulo,
         responsable,
         fecha_inicio,
         fecha_fin,
         estado: estado || "planeado",
         notas,
-        cotizacion_id: cotizacion_id || null,
+        cotizacion_id: finalCotizacionId || null,
       });
     }
   );
@@ -2643,60 +2723,134 @@ app.delete("/api/clientes/:id", requiereRol("admin", "gerente"), (req, res) => {
       return res.status(404).json({ error: "Cliente no encontrado" });
     }
 
-    db.serialize(() => {
-      db.run("DELETE FROM cliente_etiquetas WHERE cliente_id = ?", [id], (errEtiquetas) => {
-        if (errEtiquetas) {
-          console.error("Error al eliminar etiquetas del cliente:", errEtiquetas);
-        }
-      });
-
-      db.run("DELETE FROM cliente_notas WHERE cliente_id = ?", [id], (errNotas) => {
-        if (errNotas) {
-          console.error("Error al eliminar notas del cliente:", errNotas);
-        }
-      });
-
-      db.run("DELETE FROM cliente_historial WHERE cliente_id = ?", [id], (errHistorial) => {
-        if (errHistorial) {
-          console.error("Error al eliminar historial del cliente:", errHistorial);
-        }
-      });
-
-      db.run("DELETE FROM cliente_archivos WHERE cliente_id = ?", [id], (errArchivos) => {
-        if (errArchivos) {
-          console.error("Error al eliminar archivos del cliente:", errArchivos);
-        }
-      });
-
-      const clienteDir = path.join(UPLOADS_DIR, String(id));
-      fs.rm(clienteDir, { recursive: true, force: true }, (errRm) => {
-        if (errRm) {
-          console.error("Error al eliminar carpeta de archivos del cliente:", errRm);
-        }
-      });
-
-      db.run("DELETE FROM clientes WHERE id = ?", [id], function (errDelete) {
-        if (errDelete) {
-          console.error("Error al eliminar cliente:", errDelete);
-          return res.status(500).json({ error: "Error al eliminar cliente" });
+    db.get(
+      "SELECT COUNT(*) AS total FROM cotizaciones WHERE cliente_id = ?",
+      [id],
+      (errCot, rowCot) => {
+        if (errCot) {
+          console.error("Error al verificar cotizaciones del cliente:", errCot);
+          return res
+            .status(500)
+            .json({ error: "Error al verificar cotizaciones asociadas" });
         }
 
-        if (this.changes === 0) {
-          return res.status(404).json({ error: "Cliente no encontrado" });
-        }
+        db.get(
+          "SELECT COUNT(*) AS total FROM proyectos WHERE cliente_id = ?",
+          [id],
+          (errProy, rowProy) => {
+            if (errProy) {
+              console.error("Error al verificar proyectos del cliente:", errProy);
+              return res
+                .status(500)
+                .json({ error: "Error al verificar proyectos asociados" });
+            }
 
-        registrarAuditoria({
-          usuario: req.usuario,
-          accion: "cliente_eliminado",
-          entidad: "cliente",
-          entidadId: Number(id),
-          detalle: cliente.nombre,
-          ip: req.ip,
-        });
+            const totalCotizaciones = rowCot ? rowCot.total : 0;
+            const totalProyectos = rowProy ? rowProy.total : 0;
 
-        res.status(204).send();
-      });
-    });
+            if (totalCotizaciones > 0 || totalProyectos > 0) {
+              return res.status(400).json({
+                error:
+                  "No se puede eliminar el cliente porque tiene cotizaciones o proyectos asociados",
+                cotizaciones_asociadas: totalCotizaciones,
+                proyectos_asociados: totalProyectos,
+              });
+            }
+
+            db.serialize(() => {
+              db.run(
+                "DELETE FROM cliente_etiquetas WHERE cliente_id = ?",
+                [id],
+                (errEtiquetas) => {
+                  if (errEtiquetas) {
+                    console.error(
+                      "Error al eliminar etiquetas del cliente:",
+                      errEtiquetas
+                    );
+                  }
+                }
+              );
+
+              db.run(
+                "DELETE FROM cliente_notas WHERE cliente_id = ?",
+                [id],
+                (errNotas) => {
+                  if (errNotas) {
+                    console.error("Error al eliminar notas del cliente:", errNotas);
+                  }
+                }
+              );
+
+              db.run(
+                "DELETE FROM cliente_historial WHERE cliente_id = ?",
+                [id],
+                (errHistorial) => {
+                  if (errHistorial) {
+                    console.error(
+                      "Error al eliminar historial del cliente:",
+                      errHistorial
+                    );
+                  }
+                }
+              );
+
+              db.run(
+                "DELETE FROM cliente_archivos WHERE cliente_id = ?",
+                [id],
+                (errArchivos) => {
+                  if (errArchivos) {
+                    console.error(
+                      "Error al eliminar archivos del cliente:",
+                      errArchivos
+                    );
+                  }
+                }
+              );
+
+              const clienteDir = path.join(UPLOADS_DIR, String(id));
+              fs.rm(clienteDir, { recursive: true, force: true }, (errRm) => {
+                if (errRm) {
+                  console.error(
+                    "Error al eliminar carpeta de archivos del cliente:",
+                    errRm
+                  );
+                }
+              });
+
+              db.run(
+                "DELETE FROM clientes WHERE id = ?",
+                [id],
+                function (errDelete) {
+                  if (errDelete) {
+                    console.error("Error al eliminar cliente:", errDelete);
+                    return res
+                      .status(500)
+                      .json({ error: "Error al eliminar cliente" });
+                  }
+
+                  if (this.changes === 0) {
+                    return res
+                      .status(404)
+                      .json({ error: "Cliente no encontrado" });
+                  }
+
+                  registrarAuditoria({
+                    usuario: req.usuario,
+                    accion: "cliente_eliminado",
+                    entidad: "cliente",
+                    entidadId: Number(id),
+                    detalle: cliente.nombre,
+                    ip: req.ip,
+                  });
+
+                  res.status(204).send();
+                }
+              );
+            });
+          }
+        );
+      }
+    );
   });
 });
 
@@ -4049,6 +4203,13 @@ app.get("/api/finanzas/resumen-mensual", (req, res) => {
 
 // ---------- COTIZACIONES ----------
 
+const ESTADOS_COTIZACION_PERMITIDOS = [
+  "borrador",
+  "enviada",
+  "aceptada",
+  "rechazada",
+];
+
 app.get("/api/cotizaciones", (req, res) => {
   db.all(
     `SELECT c.*, p.id AS proyecto_id
@@ -4097,6 +4258,13 @@ app.post("/api/cotizaciones", (req, res) => {
   ) {
     return res.status(400).json({
       error: "Título, subtotal, impuestos, total y estado son obligatorios",
+    });
+  }
+
+  if (!ESTADOS_COTIZACION_PERMITIDOS.includes(estado)) {
+    return res.status(400).json({
+      error: `Estado inválido: '${estado}'. Valores permitidos: ${ESTADOS_COTIZACION_PERMITIDOS.join(", ")}`,
+      estados_permitidos: ESTADOS_COTIZACION_PERMITIDOS,
     });
   }
 
@@ -4181,6 +4349,13 @@ app.put("/api/cotizaciones/:id", requiereRol("admin", "gerente"), (req, res) => 
     });
   }
 
+  if (!ESTADOS_COTIZACION_PERMITIDOS.includes(estado)) {
+    return res.status(400).json({
+      error: `Estado inválido: '${estado}'. Valores permitidos: ${ESTADOS_COTIZACION_PERMITIDOS.join(", ")}`,
+      estados_permitidos: ESTADOS_COTIZACION_PERMITIDOS,
+    });
+  }
+
   const stmt = db.prepare(`
     UPDATE cotizaciones
     SET
@@ -4260,12 +4435,19 @@ app.delete("/api/cotizaciones/:id", requiereRol("admin", "gerente"), (req, res) 
   stmt.finalize();
 });
 
-app.put("/api/cotizaciones/:id/estado", (req, res) => {
+const cambiarEstadoCotizacionHandler = (req, res) => {
   const { id } = req.params;
   const { estado } = req.body;
 
   if (!estado) {
     return res.status(400).json({ error: "El estado es obligatorio" });
+  }
+
+  if (!ESTADOS_COTIZACION_PERMITIDOS.includes(estado)) {
+    return res.status(400).json({
+      error: `Estado inválido: '${estado}'. Valores permitidos: ${ESTADOS_COTIZACION_PERMITIDOS.join(", ")}`,
+      estados_permitidos: ESTADOS_COTIZACION_PERMITIDOS,
+    });
   }
 
   const stmt = db.prepare("UPDATE cotizaciones SET estado = ? WHERE id = ?");
@@ -4286,7 +4468,19 @@ app.put("/api/cotizaciones/:id/estado", (req, res) => {
   });
 
   stmt.finalize();
-});
+};
+
+app.put(
+  "/api/cotizaciones/:id/estado",
+  requiereRol("admin", "gerente"),
+  cambiarEstadoCotizacionHandler
+);
+
+app.patch(
+  "/api/cotizaciones/:id/estado",
+  requiereRol("admin", "gerente"),
+  cambiarEstadoCotizacionHandler
+);
 
 app.post("/api/cotizaciones/:id/convertir-a-factura", (req, res) => {
   const { id } = req.params;
