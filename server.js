@@ -2086,6 +2086,7 @@ app.post("/api/proyectos", async (req, res) => {
         estado: estado || "planeado",
         notas,
         cotizacion_id: finalCotizacionId || null,
+        fecha_creacion: new Date().toISOString().replace("T", " ").slice(0, 19),
       });
     }
   );
@@ -4771,6 +4772,7 @@ app.post("/api/cotizaciones/:id/convertir-a-proyecto", requiereRol("admin", "ger
                       estado: estadoInicial,
                       notas,
                       cotizacion_id: cotizacionId,
+                      fecha_creacion: new Date().toISOString().replace("T", " ").slice(0, 19),
                     },
                     yaExistia: false,
                   });

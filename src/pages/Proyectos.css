@@ -213,6 +213,98 @@
 }
 
 /* ========================================================
+   BUSCADOR DE PROYECTOS
+   ======================================================== */
+
+.pro-search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface-bg-card, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border-default);
+}
+
+.pro-search-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pro-search-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pro-search-input-wrap {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pro-search-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.72rem 0.86rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-default);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.pro-search-input::placeholder {
+  color: var(--text-faint);
+}
+
+.pro-search-input:focus {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 3px var(--border-accent);
+}
+
+.pro-search-clear-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.72rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-default);
+  background: var(--surface-bg, transparent);
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.pro-search-clear-btn:hover:not(:disabled) {
+  background: var(--surface-hover, rgba(255, 255, 255, 0.08));
+  border-color: var(--border-accent);
+}
+
+.pro-search-clear-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pro-search-count {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ========================================================
    TABLA DE PROYECTOS Y CONTENEDOR CON OVERFLOW CONTROLADO
    ======================================================== */
 

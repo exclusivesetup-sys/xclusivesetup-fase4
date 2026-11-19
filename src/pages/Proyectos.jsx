@@ -21,6 +21,22 @@ function formatDate(value) {
   return String(value);
 }
 
+function parseFechaCreacion(val) {
+  if (!val) return 0;
+  const normalized = String(val).trim().replace(" ", "T");
+  const time = Date.parse(normalized);
+  return Number.isNaN(time) ? 0 : time;
+}
+
+function normalizarTexto(texto) {
+  if (!texto) return "";
+  return String(texto)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
 export default function Proyectos() {
   const { esAdminOGerente } = useAuth();
   const [proyectos, setProyectos] = useState([]);
@@ -30,6 +46,7 @@ export default function Proyectos() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [busqueda, setBusqueda] = useState("");
 
   const [editingId, setEditingId] = useState(null);
   const [cotizacionId, setCotizacionId] = useState(null);
@@ -161,7 +178,7 @@ export default function Proyectos() {
         });
 
         setProyectos((prev) =>
-          prev.map((p) => (p.id === editingId ? updated : p))
+          prev.map((p) => (p.id === editingId ? { ...p, ...updated } : p))
         );
 
         setSuccessMsg("Proyecto actualizado correctamente.");
@@ -238,17 +255,40 @@ export default function Proyectos() {
 
   const proyectosOrdenados = useMemo(() => {
     return [...proyectos].sort((a, b) => {
-      const fa = String(a.fecha_inicio || "");
-      const fb = String(b.fecha_inicio || "");
+      const timeA = parseFechaCreacion(a.fecha_creacion);
+      const timeB = parseFechaCreacion(b.fecha_creacion);
 
-      if (fa && fb) {
-        if (fa < fb) return -1;
-        if (fa > fb) return 1;
+      if (timeA !== timeB) {
+        return timeB - timeA;
       }
 
-      return Number(b.id || 0) - Number(a.id || 0);
+      return (Number(b.id) || 0) - (Number(a.id) || 0);
     });
   }, [proyectos]);
+
+  const proyectosFiltrados = useMemo(() => {
+    const query = normalizarTexto(busqueda);
+    if (!query) {
+      return proyectosOrdenados;
+    }
+
+    return proyectosOrdenados.filter((p) => {
+      const titulo = normalizarTexto(p.titulo);
+      const cliente = normalizarTexto(p.cliente);
+
+      let cotTexto = "";
+      if (p.cotizacion_id != null) {
+        const cid = String(p.cotizacion_id);
+        cotTexto = `cotizacion #${cid} cotizacion ${cid} #${cid} ${cid} ${normalizarTexto(p.cotizacion_titulo || "")}`;
+      }
+
+      return (
+        titulo.includes(query) ||
+        cliente.includes(query) ||
+        cotTexto.includes(query)
+      );
+    });
+  }, [proyectosOrdenados, busqueda]);
 
   return (
     <div className="page">
@@ -383,13 +423,45 @@ export default function Proyectos() {
         <section className="pro-list">
           <h3>Proyectos</h3>
 
+          <div className="pro-search-bar">
+            <div className="pro-search-field">
+              <label htmlFor="pro-search-input" className="pro-search-label">
+                Buscar proyectos
+              </label>
+              <div className="pro-search-input-wrap">
+                <input
+                  id="pro-search-input"
+                  type="text"
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                  placeholder="Nombre del proyecto, cliente o cotización"
+                  className="pro-search-input"
+                />
+                <button
+                  type="button"
+                  className="pro-search-clear-btn"
+                  onClick={() => setBusqueda("")}
+                  disabled={!busqueda}
+                  title="Limpiar búsqueda"
+                >
+                  Limpiar
+                </button>
+              </div>
+            </div>
+            <div className="pro-search-count">
+              Mostrando {proyectosFiltrados.length} de {proyectos.length} proyectos
+            </div>
+          </div>
+
           {cargando ? (
             <p className="pro-empty">Cargando proyectos...</p>
-          ) : proyectosOrdenados.length === 0 ? (
+          ) : proyectos.length === 0 ? (
             <p className="pro-empty">
               Aún no tienes proyectos registrados. Crea tu primer proyecto para
               empezar a organizar tu trabajo.
             </p>
+          ) : proyectosFiltrados.length === 0 ? (
+            <p className="pro-empty">No se encontraron proyectos.</p>
           ) : (
             <div
               className="pro-table-container"
@@ -411,7 +483,7 @@ export default function Proyectos() {
                   </tr>
                 </thead>
                 <tbody>
-                  {proyectosOrdenados.map((p) => {
+                  {proyectosFiltrados.map((p) => {
                     const avance = avancePorProyecto[Number(p.id)];
                     const isHighlighted = highlightId === Number(p.id);
 
